@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: api-backoffice
+  profiles:
+    active: local
+    include: datasource, openapi, logging, core
+
+server:
+  port: 8080
+
+logging:
+    discord:
+        webhook-url: "none"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+server:
+  port: 10002
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: aws-secretsmanager:/secret/pay200
+
+logging:
+    discord:
+        webhook-url: ${DISCORD_WEB_HOOK_URL}
